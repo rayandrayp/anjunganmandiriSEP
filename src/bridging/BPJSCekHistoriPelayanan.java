@@ -30,6 +30,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 import javax.swing.JOptionPane;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -54,6 +55,7 @@ public final class BPJSCekHistoriPelayanan extends javax.swing.JDialog {
     private JsonNode root;
     private JsonNode nameNode;
     private JsonNode response;
+    HashMap<String, String> rujukanKhusus = new HashMap<>();
 
     /**
      * Creates new form DlgKamar
@@ -84,23 +86,23 @@ public final class BPJSCekHistoriPelayanan extends javax.swing.JDialog {
         for (i = 0; i < 12; i++) {
             TableColumn column = tbKamar.getColumnModel().getColumn(i);
             if (i == 0) {
-                column.setPreferredWidth(50);
+                column.setPreferredWidth(40);
             } else if (i == 1) {
-                column.setPreferredWidth(230);
-            } else if (i == 2) {
-                column.setPreferredWidth(150);
-            } else if (i == 3) {
-                column.setPreferredWidth(150);
-            } else if (i == 4) {
-                column.setPreferredWidth(160);
-            } else if (i == 5) {
-                column.setPreferredWidth(150);
-            } else if (i == 6) {
-                column.setPreferredWidth(125);
-            } else if (i == 7) {
                 column.setPreferredWidth(200);
+            } else if (i == 2) {
+                column.setPreferredWidth(140);
+            } else if (i == 3) {
+                column.setPreferredWidth(130);
+            } else if (i == 4) {
+                column.setPreferredWidth(120);
+            } else if (i == 5) {
+                column.setPreferredWidth(80);
+            } else if (i == 6) {
+                column.setPreferredWidth(155);
+            } else if (i == 7) {
+                column.setPreferredWidth(155);
             } else if (i == 8) {
-                column.setPreferredWidth(115);
+                column.setPreferredWidth(200);
             } else if (i == 9) {
                 column.setPreferredWidth(160);
             } else if (i == 10) {
@@ -332,6 +334,13 @@ public final class BPJSCekHistoriPelayanan extends javax.swing.JDialog {
     // End of variables declaration//GEN-END:variables
 
     public void tampil(String nomorrujukan) {
+        Valid.tabelKosong(tabMode);
+        
+        //bagian data rujukan
+        getRujukanRS(nomorrujukan);
+        getRujukanPCare(nomorrujukan);
+        getRujukanKhusus(nomorrujukan);
+        
         try {
             headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
@@ -345,7 +354,6 @@ public final class BPJSCekHistoriPelayanan extends javax.swing.JDialog {
             root = mapper.readTree(api.getRest().exchange(URL, HttpMethod.GET, requestEntity, String.class).getBody());
             nameNode = root.path("metaData");
             if (nameNode.path("code").asText().equals("200")) {
-                Valid.tabelKosong(tabMode);
                 response = mapper.readTree(api.Decrypt(root.path("response").asText(), utc)).path("histori");
                 //response = root.path("response").path("histori");
                 if (response.isArray()) {
@@ -380,5 +388,151 @@ public final class BPJSCekHistoriPelayanan extends javax.swing.JDialog {
         BtnCariActionPerformed(null);
 
     }
+    
+    public void getRujukanRS(String nomorkartu){
+        try {
+            URL = link+"/Rujukan/RS/Peserta/"+nomorkartu;
+//            URL = link+"/Rujukan/RS/List/Peserta/"+nomorkartu;
+            headers= new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+	    headers.add("X-Cons-ID",koneksiDB.CONSIDAPIBPJS());
+	    utc=String.valueOf(api.GetUTCdatetimeAsString());
+	    headers.add("X-Timestamp",utc);
+	    headers.add("X-Signature",api.getHmac(utc));
+            headers.add("user_key",koneksiDB.USERKEYAPIBPJS());
+	    requestEntity = new HttpEntity(headers);
+	    root = mapper.readTree(api.getRest().exchange(URL, HttpMethod.GET, requestEntity, String.class).getBody());
+            nameNode = root.path("metaData");
+//            System.out.println("URL RS : "+URL);
+            if(nameNode.path("code").asText().equals("200")){
+                response = mapper.readTree(api.Decrypt(root.path("response").asText(),utc)).path("rujukan");
+//                if(response.isArray()){
+//                    i=1;
+//                    for(JsonNode list:response){
+//                        tabMode.addRow(new Object[]{
+//                            i+".",list.path("diagnosa").path("kode").asText()+" - "+list.path("diagnosa").path("nama").asText(),list.path("pelayanan").path("kode").asText().replaceAll("1","Rawat Inap").replaceAll("2","Rawat Jalan"),
+//                            list.path("peserta").path("hakKelas").path("keterangan").asText(),list.path("peserta").path("nama").asText(),list.path("peserta").path("noKartu").asText(),"-",
+//                            list.path("noKunjungan").asText(),list.path("poliRujukan").path("nama").asText(),"-","-","-", list.path("tglKunjungan").asText()
+//                        });    
+//                        i++;
+//                    }
+//                }   
+//                System.out.println("isi Rujukan RS ");
+                tabMode.addRow(new Object[]{
+                    "1.", response.path("diagnosa").path("kode").asText()+" - "+response.path("diagnosa").path("nama").asText(), response.path("pelayanan").path("nama").asText(),
+                    response.path("peserta").path("hakKelas").path("keterangan").asText(), response.path("peserta").path("nama").asText(), response.path("peserta").path("noKartu").asText(), 
+                    "-",
+                    response.path("noKunjungan").asText(), response.path("poliRujukan").path("nama").asText(),"-","-","-",response.path("tglKunjungan").asText()
+                });
+            }else {
+                System.out.println("Rujukan RS : "+nameNode.path("message").asText());
+//                JOptionPane.showMessageDialog(null,"Rujukan RS : "+nameNode.path("message").asText());                        
+            }   
+        } catch (Exception ex) {
+            System.out.println("Notifikasi Peserta : "+ex);
+            if(ex.toString().contains("UnknownHostException")){
+                JOptionPane.showMessageDialog(rootPane,"Koneksi ke server BPJS terputus...!");
+            }
+        }
+    }
+    
+    public void getRujukanPCare(String nomorkartu){
+        try {
+            URL = link+"/Rujukan/Peserta/"+nomorkartu;
+//            URL = link+"/Rujukan/List/Peserta/"+nomorkartu;
+            headers= new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+	    headers.add("X-Cons-ID",koneksiDB.CONSIDAPIBPJS());
+	    utc=String.valueOf(api.GetUTCdatetimeAsString());
+	    headers.add("X-Timestamp",utc);
+	    headers.add("X-Signature",api.getHmac(utc));
+            headers.add("user_key",koneksiDB.USERKEYAPIBPJS());
+	    requestEntity = new HttpEntity(headers);
+	    root = mapper.readTree(api.getRest().exchange(URL, HttpMethod.GET, requestEntity, String.class).getBody());
+            nameNode = root.path("metaData");
+//            System.out.println("URL PCARE : "+URL);
+            if(nameNode.path("code").asText().equals("200")){
+                response = mapper.readTree(api.Decrypt(root.path("response").asText(),utc)).path("rujukan");
+//                if(response.isArray()){
+//                    i=1;
+//                    for(JsonNode list:response){
+//                        tabMode.addRow(new Object[]{
+//                            i+".",list.path("diagnosa").path("kode").asText()+" - "+list.path("diagnosa").path("nama").asText(),list.path("pelayanan").path("kode").asText().replaceAll("1","Rawat Inap").replaceAll("2","Rawat Jalan"),
+//                            list.path("peserta").path("hakKelas").path("keterangan").asText(),list.path("peserta").path("nama").asText(),list.path("peserta").path("noKartu").asText(),"-",
+//                            list.path("noKunjungan").asText(),list.path("poliRujukan").path("nama").asText(),"-","-","-", list.path("tglKunjungan").asText()
+//                        });    
+//                        i++;
+//                    }
+//                } 
+//                System.out.println("isi Rujukan PCARE ");
+                tabMode.addRow(new Object[]{
+                    "1.", response.path("diagnosa").path("kode").asText()+" - "+response.path("diagnosa").path("nama").asText(), response.path("pelayanan").path("nama").asText(),
+                    response.path("peserta").path("hakKelas").path("keterangan").asText(), response.path("peserta").path("nama").asText(), response.path("peserta").path("noKartu").asText(), 
+                    "-",
+                    response.path("noKunjungan").asText(), response.path("poliRujukan").path("nama").asText(),"-","-","-",response.path("tglKunjungan").asText()
+                });
+            }else {
+                System.out.println("Rujukan PCare : "+nameNode.path("message").asText());
+//                JOptionPane.showMessageDialog(null,"Rujukan PCare : "+nameNode.path("message").asText());                
+            }   
+        } catch (Exception ex) {
+            System.out.println("Notifikasi Peserta : "+ex);
+            if(ex.toString().contains("UnknownHostException")){
+                JOptionPane.showMessageDialog(rootPane,"Koneksi ke server BPJS terputus...!");
+            }
+        }
+    }
+    
+    public void getRujukanKhusus(String nomorkartu){
+        Date today = new Date(); // Fri Jun 17 14:54:28 PDT 2016 
+        Calendar cal = Calendar.getInstance(); 
+        cal.setTime(today); 
+        int month = 0;
+        int year = 0;
+        String month_str = "";
+        for(int i = 0; i < 4; i++){
+            month = cal.get(Calendar.MONTH) + 1;
+            year = cal.get(Calendar.YEAR);
+//            System.out.println(month+" "+year);
+            month_str = (month<10)? "0"+String.valueOf(month) : String.valueOf(month);
+            getDataRujukanKhusus(nomorkartu,month_str,String.valueOf(year));
+            cal.add(Calendar.MONTH, -1);
+        }
 
+    }
+    
+    public void getDataRujukanKhusus(String nomorkartu, String bulan, String tahun){
+        try {
+            URL = link+"/Rujukan/Khusus/List/Bulan/"+bulan+"/Tahun/"+tahun;
+            headers= new HttpHeaders();
+            headers.setContentType(MediaType.APPLICATION_JSON);
+	    headers.add("X-Cons-ID",koneksiDB.CONSIDAPIBPJS());
+	    utc=String.valueOf(api.GetUTCdatetimeAsString());
+	    headers.add("X-Timestamp",utc);
+	    headers.add("X-Signature",api.getHmac(utc));
+            headers.add("user_key",koneksiDB.USERKEYAPIBPJS());
+	    requestEntity = new HttpEntity(headers);
+	    root = mapper.readTree(api.getRest().exchange(URL, HttpMethod.GET, requestEntity, String.class).getBody());
+            nameNode = root.path("metaData");
+//            System.out.println("URL : "+URL);
+            if(nameNode.path("code").asText().equals("200")){
+                response = mapper.readTree(api.Decrypt(root.path("response").asText(),utc)).path("rujukan");
+                if(response.isArray()){
+//                System.out.println("isi Rujukan Khusus ");
+                    for(JsonNode list:response){
+                        if(list.path("nokapst").asText().equalsIgnoreCase(nomorkartu)){
+                            rujukanKhusus.put(list.path("norujukan").asText(), list.path("tglrujukan_awal").asText());
+                        }
+                    }
+                } 
+            }else {
+                System.out.println("Rujukan Khusus : "+nameNode.path("message").asText());             
+            }   
+        } catch (Exception ex) {
+            System.out.println("Notifikasi Peserta : "+ex);
+            if(ex.toString().contains("UnknownHostException")){
+                JOptionPane.showMessageDialog(rootPane,"Koneksi ke server BPJS terputus...!");
+            }
+        }
+    }
 }

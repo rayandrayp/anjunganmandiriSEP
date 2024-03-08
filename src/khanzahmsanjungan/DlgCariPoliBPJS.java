@@ -96,6 +96,11 @@ public final class DlgCariPoliBPJS extends javax.swing.JDialog {
     private void initComponents() {
 
         internalFrame1 = new widget.InternalFrame();
+        panelGlass6 = new widget.panelisi();
+        jLabel16 = new widget.Label();
+        PoliklinikCari = new widget.TextBox();
+        BtnCari = new widget.Button();
+        BtnKeluar = new widget.Button();
         Scroll = new widget.ScrollPane();
         tbKamar = new widget.Table();
 
@@ -114,6 +119,61 @@ public final class DlgCariPoliBPJS extends javax.swing.JDialog {
         internalFrame1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(240, 245, 235)), "::[ Unit/Poliklinik ]::", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 0, 11), new java.awt.Color(50, 50, 50))); // NOI18N
         internalFrame1.setName("internalFrame1"); // NOI18N
         internalFrame1.setLayout(new java.awt.BorderLayout(1, 1));
+
+        panelGlass6.setName("panelGlass6"); // NOI18N
+        panelGlass6.setPreferredSize(new java.awt.Dimension(44, 54));
+        panelGlass6.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.LEFT, 5, 9));
+
+        jLabel16.setText("Poliklinik :");
+        jLabel16.setName("jLabel16"); // NOI18N
+        jLabel16.setPreferredSize(new java.awt.Dimension(100, 23));
+        panelGlass6.add(jLabel16);
+
+        PoliklinikCari.setName("PoliklinikCari"); // NOI18N
+        PoliklinikCari.setPreferredSize(new java.awt.Dimension(310, 23));
+        PoliklinikCari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                PoliklinikCariKeyPressed(evt);
+            }
+        });
+        panelGlass6.add(PoliklinikCari);
+
+        BtnCari.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/accept.png"))); // NOI18N
+        BtnCari.setMnemonic('6');
+        BtnCari.setToolTipText("Alt+6");
+        BtnCari.setName("BtnCari"); // NOI18N
+        BtnCari.setPreferredSize(new java.awt.Dimension(28, 23));
+        BtnCari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnCariActionPerformed(evt);
+            }
+        });
+        BtnCari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BtnCariKeyPressed(evt);
+            }
+        });
+        panelGlass6.add(BtnCari);
+
+        BtnKeluar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/exit.png"))); // NOI18N
+        BtnKeluar.setMnemonic('K');
+        BtnKeluar.setText("Keluar");
+        BtnKeluar.setToolTipText("Alt+K");
+        BtnKeluar.setName("BtnKeluar"); // NOI18N
+        BtnKeluar.setPreferredSize(new java.awt.Dimension(100, 30));
+        BtnKeluar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnKeluarActionPerformed(evt);
+            }
+        });
+        BtnKeluar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                BtnKeluarKeyPressed(evt);
+            }
+        });
+        panelGlass6.add(BtnKeluar);
+
+        internalFrame1.add(panelGlass6, java.awt.BorderLayout.PAGE_START);
 
         Scroll.setName("Scroll"); // NOI18N
         Scroll.setOpaque(true);
@@ -158,6 +218,43 @@ public final class DlgCariPoliBPJS extends javax.swing.JDialog {
 
     }//GEN-LAST:event_formWindowOpened
 
+    private void PoliklinikCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_PoliklinikCariKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            BtnCariActionPerformed(null);
+            //            BtnPrint.requestFocus();
+        } else if (evt.getKeyCode() == KeyEvent.VK_PAGE_DOWN) {
+            BtnCariActionPerformed(null);
+        } else if (evt.getKeyCode() == KeyEvent.VK_PAGE_UP) {
+            BtnKeluar.requestFocus();
+        } else if (evt.getKeyCode() == KeyEvent.VK_UP) {
+            tbKamar.requestFocus();
+        }
+    }//GEN-LAST:event_PoliklinikCariKeyPressed
+
+    private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCariActionPerformed
+        tampil();
+    }//GEN-LAST:event_BtnCariActionPerformed
+
+    private void BtnCariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnCariKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
+            BtnCariActionPerformed(null);
+        } else {
+            Valid.pindah(evt, PoliklinikCari, PoliklinikCari);
+        }
+    }//GEN-LAST:event_BtnCariKeyPressed
+
+    private void BtnKeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnKeluarActionPerformed
+        dispose();
+    }//GEN-LAST:event_BtnKeluarActionPerformed
+
+    private void BtnKeluarKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_BtnKeluarKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
+            dispose();
+        } else {
+            Valid.pindah(evt, PoliklinikCari, BtnKeluar);
+        }
+    }//GEN-LAST:event_BtnKeluarKeyPressed
+
     /**
      * @param args the command line arguments
      */
@@ -175,8 +272,13 @@ public final class DlgCariPoliBPJS extends javax.swing.JDialog {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private widget.Button BtnCari;
+    private widget.Button BtnKeluar;
+    private widget.TextBox PoliklinikCari;
     private widget.ScrollPane Scroll;
     private widget.InternalFrame internalFrame1;
+    private widget.Label jLabel16;
+    private widget.panelisi panelGlass6;
     private widget.Table tbKamar;
     // End of variables declaration//GEN-END:variables
 
@@ -187,7 +289,8 @@ public final class DlgCariPoliBPJS extends javax.swing.JDialog {
                     + "	maping_poli_bpjs.kd_poli_bpjs, \n"
                     + "	maping_poli_bpjs.nm_poli_bpjs\n"
                     + "FROM\n"
-                    + "	maping_poli_bpjs");
+                    + "	maping_poli_bpjs where kd_poli_rs in (SELECT kd_poli FROM poliklinik WHERE STATUS = '1') "
+                    + " AND (kd_poli_rs like '%"+PoliklinikCari.getText()+"%' or kd_poli_bpjs like '%"+PoliklinikCari.getText()+"%' or nm_poli_bpjs like '%"+PoliklinikCari.getText()+"%')");
             try {
                 rs = ps.executeQuery();
                 while (rs.next()) {

@@ -199,12 +199,9 @@ public final class BPJSCekReferensiDokterDPJP1 extends javax.swing.JDialog {
         jLabel14 = new widget.Label();
         KdSep = new widget.TextBox();
         NmSep = new widget.TextBox();
-        BtnPropinsi = new widget.Button();
         jLabel16 = new widget.Label();
         Dokter = new widget.TextBox();
         BtnCari = new widget.Button();
-        jLabel17 = new widget.Label();
-        BtnPrint = new widget.Button();
         BtnKeluar = new widget.Button();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
@@ -241,14 +238,14 @@ public final class BPJSCekReferensiDokterDPJP1 extends javax.swing.JDialog {
 
         jLabel15.setText("Tanggal Pelayanan :");
         jLabel15.setName("jLabel15"); // NOI18N
-        jLabel15.setPreferredSize(new java.awt.Dimension(110, 23));
+        jLabel15.setPreferredSize(new java.awt.Dimension(120, 23));
         panelGlass6.add(jLabel15);
 
-        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "03-05-2023" }));
+        DTPCari1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "21-07-2023" }));
         DTPCari1.setDisplayFormat("dd-MM-yyyy");
         DTPCari1.setName("DTPCari1"); // NOI18N
         DTPCari1.setOpaque(false);
-        DTPCari1.setPreferredSize(new java.awt.Dimension(150, 23));
+        DTPCari1.setPreferredSize(new java.awt.Dimension(120, 23));
         DTPCari1.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
                 DTPCari1KeyPressed(evt);
@@ -258,7 +255,7 @@ public final class BPJSCekReferensiDokterDPJP1 extends javax.swing.JDialog {
 
         jLabel14.setText("Poli / Spesialis");
         jLabel14.setName("jLabel14"); // NOI18N
-        jLabel14.setPreferredSize(new java.awt.Dimension(125, 23));
+        jLabel14.setPreferredSize(new java.awt.Dimension(90, 23));
         panelGlass6.add(jLabel14);
 
         KdSep.setEditable(false);
@@ -271,18 +268,6 @@ public final class BPJSCekReferensiDokterDPJP1 extends javax.swing.JDialog {
         NmSep.setName("NmSep"); // NOI18N
         NmSep.setPreferredSize(new java.awt.Dimension(200, 23));
         panelGlass6.add(NmSep);
-
-        BtnPropinsi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/190.png"))); // NOI18N
-        BtnPropinsi.setMnemonic('3');
-        BtnPropinsi.setToolTipText("ALt+3");
-        BtnPropinsi.setName("BtnPropinsi"); // NOI18N
-        BtnPropinsi.setPreferredSize(new java.awt.Dimension(28, 23));
-        BtnPropinsi.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnPropinsiActionPerformed(evt);
-            }
-        });
-        panelGlass6.add(BtnPropinsi);
 
         jLabel16.setText("Dokter :");
         jLabel16.setName("jLabel16"); // NOI18N
@@ -314,23 +299,6 @@ public final class BPJSCekReferensiDokterDPJP1 extends javax.swing.JDialog {
             }
         });
         panelGlass6.add(BtnCari);
-
-        jLabel17.setName("jLabel17"); // NOI18N
-        jLabel17.setPreferredSize(new java.awt.Dimension(30, 23));
-        panelGlass6.add(jLabel17);
-
-        BtnPrint.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/b_print.png"))); // NOI18N
-        BtnPrint.setMnemonic('T');
-        BtnPrint.setText("Cetak");
-        BtnPrint.setToolTipText("Alt+T");
-        BtnPrint.setName("BtnPrint"); // NOI18N
-        BtnPrint.setPreferredSize(new java.awt.Dimension(100, 30));
-        BtnPrint.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnPrintActionPerformed(evt);
-            }
-        });
-        panelGlass6.add(BtnPrint);
 
         BtnKeluar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/picture/exit.png"))); // NOI18N
         BtnKeluar.setMnemonic('K');
@@ -365,43 +333,14 @@ public final class BPJSCekReferensiDokterDPJP1 extends javax.swing.JDialog {
         if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
             dispose();
         } else {
-            Valid.pindah(evt, BtnPrint, BtnKeluar);
+            Valid.pindah(evt, Dokter, BtnKeluar);
         }
     }//GEN-LAST:event_BtnKeluarKeyPressed
-
-    private void BtnPrintActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPrintActionPerformed
-        if (tabMode.getRowCount() == 0) {
-            JOptionPane.showMessageDialog(null, "Maaf, data sudah habis. Tidak ada data yang bisa anda print...!!!!");
-            //TCari.requestFocus();
-        } else if (tabMode.getRowCount() != 0) {
-            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-
-            Sequel.queryu("truncate table temporary");
-            int row = tabMode.getRowCount();
-            for (int r = 0; r < row; r++) {
-                Sequel.menyimpan("temporary", "'0','"
-                        + tabMode.getValueAt(r, 0).toString() + "','"
-                        + tabMode.getValueAt(r, 1).toString() + "','"
-                        + tabMode.getValueAt(r, 2).toString() + "','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','','',''", "Rekap Harian Pengadaan Ipsrs");
-            }
-
-            Map<String, Object> param = new HashMap<>();
-            param.put("namars", akses.getnamars());
-            param.put("alamatrs", akses.getalamatrs());
-            param.put("kotars", akses.getkabupatenrs());
-            param.put("propinsirs", akses.getpropinsirs());
-            param.put("kontakrs", akses.getkontakrs());
-            param.put("emailrs", akses.getemailrs());
-            param.put("logo", Sequel.cariGambar("select logo from setting"));
-            Valid.MyReport("rptCariBPJSReferensiDokter.jasper", "report", "[ Pencarian Referensi Dokter DPJP ]", param);
-            this.setCursor(Cursor.getDefaultCursor());
-        }
-    }//GEN-LAST:event_BtnPrintActionPerformed
 
     private void DokterKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DokterKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             BtnCariActionPerformed(null);
-            BtnPrint.requestFocus();
+//            BtnPrint.requestFocus();
         } else if (evt.getKeyCode() == KeyEvent.VK_PAGE_DOWN) {
             BtnCariActionPerformed(null);
         } else if (evt.getKeyCode() == KeyEvent.VK_PAGE_UP) {
@@ -414,7 +353,7 @@ public final class BPJSCekReferensiDokterDPJP1 extends javax.swing.JDialog {
     private void BtnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCariActionPerformed
         if (KdSep.getText().trim().equals("") || NmSep.getText().trim().equals("")) {
             JOptionPane.showMessageDialog(null, "Silahkan pilih spesialis dulu..!!");
-            BtnPropinsi.requestFocus();
+//            BtnPropinsi.requestFocus();
         } else {
             this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             tampil(Dokter.getText());
@@ -427,19 +366,13 @@ public final class BPJSCekReferensiDokterDPJP1 extends javax.swing.JDialog {
         if (evt.getKeyCode() == KeyEvent.VK_SPACE) {
             BtnCariActionPerformed(null);
         } else {
-            Valid.pindah(evt, Dokter, BtnPrint);
+            Valid.pindah(evt, Dokter, Dokter);
         }
     }//GEN-LAST:event_BtnCariKeyPressed
 
     private void DTPCari1KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DTPCari1KeyPressed
         // TODO add your handling code here:
     }//GEN-LAST:event_DTPCari1KeyPressed
-
-    private void BtnPropinsiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnPropinsiActionPerformed
-        spesialis.setSize(internalFrame1.getWidth() - 20, internalFrame1.getHeight() - 20);
-        spesialis.setLocationRelativeTo(internalFrame1);
-        spesialis.setVisible(true);
-    }//GEN-LAST:event_BtnPropinsiActionPerformed
 
     private void ScrollMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ScrollMouseClicked
 
@@ -470,8 +403,6 @@ public final class BPJSCekReferensiDokterDPJP1 extends javax.swing.JDialog {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private widget.Button BtnCari;
     private widget.Button BtnKeluar;
-    private widget.Button BtnPrint;
-    private widget.Button BtnPropinsi;
     private widget.Tanggal DTPCari1;
     private widget.TextBox Dokter;
     private widget.TextBox KdSep;
@@ -481,7 +412,6 @@ public final class BPJSCekReferensiDokterDPJP1 extends javax.swing.JDialog {
     private widget.Label jLabel14;
     private widget.Label jLabel15;
     private widget.Label jLabel16;
-    private widget.Label jLabel17;
     private widget.panelisi panelGlass6;
     private widget.Table tbKamar;
     // End of variables declaration//GEN-END:variables

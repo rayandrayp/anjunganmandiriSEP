@@ -199,6 +199,7 @@ public class DlgCekBooking extends javax.swing.JDialog {
         NoRMPasien.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 131, 62), 2, true));
         NoRMPasien.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         NoRMPasien.setFont(new java.awt.Font("Poppins", 0, 24)); // NOI18N
+        NoRMPasien.setMinimumSize(new java.awt.Dimension(350, 36));
         NoRMPasien.setPreferredSize(new java.awt.Dimension(350, 75));
         NoRMPasien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -533,15 +534,16 @@ public class DlgCekBooking extends javax.swing.JDialog {
         param.put("kontakrs", Sequel.cariIsi("select kontak from setting"));
         param.put("emailrs", Sequel.cariIsi("select email from setting"));
         param.put("logo", Sequel.cariGambar("select logo from setting"));
-        Valid.MyReportqryabdul("rptBuktiRegister.jasper", "report", "::[ Bukti Register ]::",
-                "select IF ((SELECT count( booking_registrasi.no_rkm_medis ) FROM booking_registrasi WHERE booking_registrasi.STATUS = 'Terdaftar'  AND booking_registrasi.no_rkm_medis = reg_periksa.no_rkm_medis AND booking_registrasi.tanggal_periksa = reg_periksa .tgl_registrasi AND kd_dokter = reg_periksa.kd_dokter )= 1,CONCAT( 'A', reg_periksa.no_reg ),CONCAT( 'W', reg_periksa.no_reg ) ) AS no_reg,reg_periksa.no_rawat,reg_periksa.tgl_registrasi,reg_periksa.jam_reg,pasien.no_tlp,"
-                + "reg_periksa.kd_dokter,dokter.nm_dokter,reg_periksa.no_rkm_medis,pasien.nm_pasien,pasien.jk,pasien.umur as umur,poliklinik.nm_poli,"
-                + "reg_periksa.p_jawab,reg_periksa.almt_pj,reg_periksa.hubunganpj,reg_periksa.biaya_reg,reg_periksa.stts_daftar,penjab.png_jawab "
-                + "from reg_periksa inner join dokter inner join pasien inner join poliklinik inner join penjab "
-                + "on reg_periksa.kd_dokter=dokter.kd_dokter and reg_periksa.no_rkm_medis=pasien.no_rkm_medis "
-                + "and reg_periksa.kd_pj=penjab.kd_pj and reg_periksa.kd_poli=poliklinik.kd_poli where reg_periksa.no_rawat='" + norawat + "' ", param);
+        Valid.MyReportqry("rptBuktiRegister.jasper", "report", "::[ Bukti Register ]::",
+                "SELECT rp.no_reg, rp.no_rawat, rp.tgl_registrasi, d.nm_dokter, rp.no_rkm_medis, p.nm_pasien, po.nm_poli, pe.png_jawab, IFNULL(r.nobooking,'-') AS nobooking, IFNULL(r.nomorreferensi,'-') AS nomorreferensi\n" +
+                "FROM reg_periksa rp\n" +
+                "INNER JOIN dokter d ON d.kd_dokter = rp.kd_dokter\n" +
+                "INNER JOIN pasien p ON p.no_rkm_medis = rp.no_rkm_medis\n" +
+                "INNER JOIN poliklinik po ON po.kd_poli = rp.kd_poli\n" +
+                "INNER JOIN penjab pe ON pe.kd_pj = rp.kd_pj\n" +
+                "LEFT JOIN referensi_mobilejkn_bpjs r ON r.no_rawat = rp.no_rawat\n" +
+                "WHERE rp.no_rawat ='" + norawat + "' ", param);
         System.out.println(norawat);
         this.setCursor(Cursor.getDefaultCursor());
-
     }
 }

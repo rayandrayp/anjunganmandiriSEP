@@ -1,0 +1,14 @@
+===========================+++++++++++++++++++++++++++++++==================================
+Mulai proses simpan 043617
+Dokter & Poli ada isinya.. Checkpoint sebelum panggil
+Mulai fungsi SimpanAntrianOnSite
+kodebooking 20230927000391 1
+Nomor Referensi 1323R0020923K003900
+WS Add Antrean JSON: {"kodebooking": "20230927000391","jenispasien": "JKN","nomorkartu": "0001268244562","nik": "3573044704820010","nohp": "085203335977","kodepoli": "MAT","namapoli": "Poli Penyakit Mata","pasienbaru": 0,"norm": "043617","tanggalperiksa": "2023-09-27","kodedokter": 489071,"namadokter": "dr. DIAH PUSPITA RIFASANTI, Sp.M","jampraktek": "08:00-12:00","jeniskunjungan": 2,"nomorreferensi": "1323R0020923K003900","nomorantrean": "016","angkaantrean": 16,"estimasidilayani": 1695786000000,"sisakuotajkn": 24,"kuotajkn": 40,"sisakuotanonjkn": 24,"kuotanonjkn": 40,"keterangan": "Peserta harap 30 menit lebih awal guna pencatatan administrasi. Estimasi pelayanan 10 menit per pasien"} | URL: https://apijkn.bpjs-kesehatan.go.id/antreanrs/antrean/add
+WS Add Antrean berhasil 1, update status kirim menjadi Sudah 20230927000391
+simpan antrian onsite selesai
+Memulai fungsi insertSEP
+WS InsertSEP JSON: {"request":{"t_sep":{"noKartu":"0001268244562","tglSep":"2023-09-27","ppkPelayanan":"1323R002","jnsPelayanan":"2","klsRawat":{"klsRawatHak":"3","klsRawatNaik":"","pembiayaan":"","penanggungJawab":""},"noMR":"043617","rujukan": {"asalRujukan":"1","tglRujukan":"2023-08-14","noRujukan":"0212B0040823P000761","ppkRujukan":"0212B004"},"catatan":"SKP 11/11/2023 | S2","diagAwal":"K08.2","poli": {"tujuan": "MAT","eksekutif": "0"},"cob": {"cob": "0"},"katarak": {"katarak": "0"},"jaminan": {"lakaLantas":"0","penjamin": {"tglKejadian": "","keterangan": "","suplesi": {"suplesi": "0","noSepSuplesi": "","lokasiLaka": {"kdPropinsi": "","kdKabupaten": "","kdKecamatan": ""}}}},"tujuanKunj": "0","flagProcedure": "","kdPenunjang": "","assesmentPel": "2","skdp": {"noSurat": "1323R0020923K003900","kodeDPJP": "489071"},"dpjpLayan": "489071","noTelp": "085203335977","user":"0001268244562"}}} | URL https://apijkn.bpjs-kesehatan.go.id/vclaim-rest//SEP/2.0/insert
+Proses Selesai.
+
+

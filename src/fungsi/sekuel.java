@@ -246,6 +246,7 @@ public final class sekuel {
                 for (angka = 1; angka <= i; angka++) {
                     ps.setString(angka, a[angka - 1]);
                 }
+//                System.out.println("ps "+ps);
                 ps.executeUpdate();
                 bool = true;
             } catch (Exception e) {
@@ -1577,7 +1578,7 @@ public final class sekuel {
                 try {
                     InetAddress inetAddress = InetAddress.getLocalHost();
                     ps.setString(1, inetAddress.getHostName() + " " + inetAddress.getHostAddress() + " " + sql);
-                    ps.setString(2, akses.getkode());
+                    ps.setString(2, "Anjungan");
                     ps.executeUpdate();
                 } catch (Exception e) {
                     System.out.println("Notifikasi : " + e);

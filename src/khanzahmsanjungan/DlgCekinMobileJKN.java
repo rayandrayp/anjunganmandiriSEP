@@ -199,6 +199,7 @@ public class DlgCekinMobileJKN extends javax.swing.JDialog {
         NoRMPasien.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 131, 62), 2, true));
         NoRMPasien.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         NoRMPasien.setFont(new java.awt.Font("Poppins", 0, 36)); // NOI18N
+        NoRMPasien.setMinimumSize(new java.awt.Dimension(350, 51));
         NoRMPasien.setPreferredSize(new java.awt.Dimension(350, 75));
         NoRMPasien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -219,7 +220,7 @@ public class DlgCekinMobileJKN extends javax.swing.JDialog {
         jLabel28.setForeground(new java.awt.Color(0, 131, 62));
         jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel28.setText("No Rujukan / No Peserta");
-        jLabel28.setFont(new java.awt.Font("Poppins", 0, 36)); // NOI18N
+        jLabel28.setFont(new java.awt.Font("Poppins", 0, 18)); // NOI18N
         jLabel28.setPreferredSize(new java.awt.Dimension(500, 75));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -307,14 +308,31 @@ public class DlgCekinMobileJKN extends javax.swing.JDialog {
 
     private void NoRMPasienKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NoRMPasienKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
-            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-            DlgRegistrasiSEPPertama form = new DlgRegistrasiSEPPertama(null, true);
-            form.tampil(NoRMPasien.getText());
-            form.setSize(this.getWidth(), this.getHeight());
-            form.setLocationRelativeTo(jPanel1);
-            this.dispose();
-            form.setVisible(true);
-            this.setCursor(Cursor.getDefaultCursor());
+            if(NoRMPasien.getText().length()==13){ //no kartu
+                if (Sequel.cariInteger("select count(pasien.no_peserta) from pasien where pasien.no_peserta='" + NoRMPasien.getText() + "'") == 1) {
+                    this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                    DlgRegistrasiSEPPertama form = new DlgRegistrasiSEPPertama(null, true);
+                    form.tampil(NoRMPasien.getText());
+                    form.setCheckin();
+                    form.setSize(this.getWidth(), this.getHeight());
+                    form.setLocationRelativeTo(jPanel1);
+                    this.dispose();
+                    form.setVisible(true);
+                    this.setCursor(Cursor.getDefaultCursor());
+                } else {
+                    JOptionPane.showMessageDialog(rootPane, "Nomor peserta tidak terdaftar...!");
+                }
+            }else if(NoRMPasien.getText().length()==19){ //rujukan atau surkon
+                this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                DlgRegistrasiSEPPertama form = new DlgRegistrasiSEPPertama(null, true);
+                form.tampilNoRujukan(NoRMPasien.getText());
+                form.setCheckin();
+                form.setSize(this.getWidth(), this.getHeight());
+                form.setLocationRelativeTo(jPanel1);
+                this.dispose();
+                form.setVisible(true);
+                this.setCursor(Cursor.getDefaultCursor());
+            }
         }
 
     }//GEN-LAST:event_NoRMPasienKeyPressed
@@ -325,14 +343,52 @@ public class DlgCekinMobileJKN extends javax.swing.JDialog {
     }//GEN-LAST:event_BtnCloseActionPerformed
 
     private void BtnClose2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnClose2ActionPerformed
-        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-        DlgRegistrasiSEPPertama form = new DlgRegistrasiSEPPertama(null, true);
-        form.tampil(NoRMPasien.getText());
-        form.setSize(this.getWidth(), this.getHeight());
-        form.setLocationRelativeTo(jPanel1);
-        this.dispose();
-        form.setVisible(true);
-        this.setCursor(Cursor.getDefaultCursor());
+        if(NoRMPasien.getText().length()==13){ //no kartu
+            if (Sequel.cariInteger("select count(pasien.no_peserta) from pasien where pasien.no_peserta='" + NoRMPasien.getText() + "'") == 1) {
+                if(Sequel.cariInteger("SELECT  COUNT(*) FROM bridging_surat_kontrol_bpjs WHERE no_sep =  (SELECT no_sep FROM bridging_sep WHERE no_kartu = '" + NoRMPasien.getText() + "' ORDER BY tglsep DESC LIMIT 1)") > 0){
+                    // surkon bpjs
+                } else if (Sequel.cariInteger("SELECT  COUNT(*) FROM surat_kontrol_internal WHERE no_sep =  (SELECT no_sep FROM bridging_sep WHERE no_kartu = '" + NoRMPasien.getText() + "' ORDER BY tglsep DESC LIMIT 1)") > 0){
+                    // surkon internal
+                } else {
+                    //rujukan pertama 
+                    this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                    DlgRegistrasiSEPPertama form = new DlgRegistrasiSEPPertama(null, true);
+                    form.tampil(NoRMPasien.getText());
+                    form.setCheckin();
+                    form.setSize(this.getWidth(), this.getHeight());
+                    form.setLocationRelativeTo(jPanel1);
+                    this.dispose();
+                    form.setVisible(true);
+                    this.setCursor(Cursor.getDefaultCursor());
+                }
+            } else {
+                JOptionPane.showMessageDialog(rootPane, "Nomor peserta tidak terdaftar...!");
+            }
+        }else if(NoRMPasien.getText().length()==19){ //rujukan atau surkon
+            if(Sequel.cariInteger("SELECT  COUNT(*) FROM bridging_surat_kontrol_bpjs WHERE no_sep =  (SELECT no_sep FROM bridging_sep WHERE no_rujukan = '" + NoRMPasien.getText() + "' ORDER BY tglsep DESC LIMIT 1)") > 0){
+                // surkon bpjs
+            } else if (Sequel.cariInteger("SELECT  COUNT(*) FROM surat_kontrol_internal WHERE no_sep =  (SELECT no_sep FROM bridging_sep WHERE no_rujukan = '" + NoRMPasien.getText() + "' ORDER BY tglsep DESC LIMIT 1)") > 0){
+                // surkon internal
+            } else {
+                this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                DlgRegistrasiSEPPertama form = new DlgRegistrasiSEPPertama(null, true);
+                form.tampilNoRujukan(NoRMPasien.getText());
+                form.setCheckin();
+                form.setSize(this.getWidth(), this.getHeight());
+                form.setLocationRelativeTo(jPanel1);
+                this.dispose();
+                form.setVisible(true);
+                this.setCursor(Cursor.getDefaultCursor());
+            }
+        }
+//        this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+//        DlgRegistrasiSEPPertama form = new DlgRegistrasiSEPPertama(null, true);
+//        form.tampil(NoRMPasien.getText());
+//        form.setSize(this.getWidth(), this.getHeight());
+//        form.setLocationRelativeTo(jPanel1);
+//        this.dispose();
+//        form.setVisible(true);
+//        this.setCursor(Cursor.getDefaultCursor());
     }//GEN-LAST:event_BtnClose2ActionPerformed
 
     /**

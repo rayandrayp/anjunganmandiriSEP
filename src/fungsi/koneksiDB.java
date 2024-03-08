@@ -53,7 +53,8 @@ public class koneksiDB {
                         + "  #    ___) || | | |  | ||  _ <  ___) | | . \\ | | | || (_| || | | | / /| (_| |\n"
                         + "  #   |____/|___||_|  |_||_| \\_\\|____/  |_|\\_\\|_| |_| \\__,_||_| |_|/___|\\__,_|\n"
                         + "  #                                                                           \n"
-                        + "                                                                           \n"
+                        + "  Anjungan SEP Mandiri v.1.5.4                                                                \n"
+                        + "                                                                                                \n"
                         + "  Licensi yang dianut di software ini https://en.wikipedia.org/wiki/Aladdin_Free_Public_License \n"
                         + "  Informasi dan panduan bisa dicek di halaman https://github.com/mas-elkhanza/SIMRS-Khanza/wiki \n"
                         + "                                                                           ");
@@ -64,6 +65,16 @@ public class koneksiDB {
         return connection;
     }
 
+    public static String INISIALPETUGAS() {
+        try {
+            prop.loadFromXML(new FileInputStream("setting/petugas_anjungan.xml"));
+            var = prop.getProperty("INISIAL");
+        } catch (Exception e) {
+            var = "";
+        }
+        return var;
+    }
+    
     public static String HOST() {
         try {
             prop.loadFromXML(new FileInputStream("setting/database.xml"));

@@ -200,6 +200,7 @@ public class DlgCekSKDPKontrol extends javax.swing.JDialog {
         NoRMPasien.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 131, 62), 2, true));
         NoRMPasien.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         NoRMPasien.setFont(new java.awt.Font("Poppins", 0, 24)); // NOI18N
+        NoRMPasien.setMinimumSize(new java.awt.Dimension(350, 36));
         NoRMPasien.setPreferredSize(new java.awt.Dimension(350, 75));
         NoRMPasien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -311,7 +312,16 @@ public class DlgCekSKDPKontrol extends javax.swing.JDialog {
             if (Sequel.cariInteger("select count(bridging_surat_kontrol_bpjs.no_surat) from bridging_surat_kontrol_bpjs where bridging_surat_kontrol_bpjs.no_surat='" + NoRMPasien.getText() + "'") > 0) {
                 this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                 DlgRegistrasiSEPPertama form = new DlgRegistrasiSEPPertama(null, true);
-                form.tampilKontrol(NoRMPasien.getText());
+                form.tampilKontrol(NoRMPasien.getText(),"bpjs");
+                form.setSize(this.getWidth(), this.getHeight());
+                form.setLocationRelativeTo(jPanel1);
+                this.dispose();
+                form.setVisible(true);
+                this.setCursor(Cursor.getDefaultCursor());
+            } else if (Sequel.cariInteger("select count(surat_kontrol_internal.no_surat) from surat_kontrol_internal where surat_kontrol_internal.no_surat='" + NoRMPasien.getText() + "'") > 0) {
+                this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                DlgRegistrasiSEPPertama form = new DlgRegistrasiSEPPertama(null, true);
+                form.tampilKontrol(NoRMPasien.getText(),"internal");
                 form.setSize(this.getWidth(), this.getHeight());
                 form.setLocationRelativeTo(jPanel1);
                 this.dispose();
@@ -334,7 +344,18 @@ public class DlgCekSKDPKontrol extends javax.swing.JDialog {
         if (Sequel.cariInteger("select count(bridging_surat_kontrol_bpjs.no_surat) from bridging_surat_kontrol_bpjs where bridging_surat_kontrol_bpjs.no_surat='" + NoRMPasien.getText() + "'") > 0) {
             this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             DlgRegistrasiSEPPertama form = new DlgRegistrasiSEPPertama(null, true);
-            form.tampilKontrol(NoRMPasien.getText());
+            form.tampilKontrol(NoRMPasien.getText(),"bpjs");
+            form.CekProsedur();
+            form.setSize(this.getWidth(), this.getHeight());
+            form.setLocationRelativeTo(jPanel1);
+            this.dispose();
+            form.setVisible(true);
+            this.setCursor(Cursor.getDefaultCursor());
+        } else if (Sequel.cariInteger("select count(surat_kontrol_internal.no_surat) from surat_kontrol_internal where surat_kontrol_internal.no_surat='" + NoRMPasien.getText() + "'") > 0) {
+            this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+            DlgRegistrasiSEPPertama form = new DlgRegistrasiSEPPertama(null, true);
+            form.tampilKontrol(NoRMPasien.getText(),"internal");
+            form.CekProsedur();
             form.setSize(this.getWidth(), this.getHeight());
             form.setLocationRelativeTo(jPanel1);
             this.dispose();

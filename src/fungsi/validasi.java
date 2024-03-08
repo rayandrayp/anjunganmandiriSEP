@@ -651,7 +651,7 @@ public final class validasi {
         } // end if
 
         try {
-            System.out.println("masuk sini");
+//            System.out.println("masuk sini");
             ps = connect.prepareStatement(qry);
             try {
                 String namafile = "./" + reportDirName + "/" + reportName;

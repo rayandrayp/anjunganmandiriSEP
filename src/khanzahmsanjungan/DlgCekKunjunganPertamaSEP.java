@@ -200,6 +200,7 @@ public class DlgCekKunjunganPertamaSEP extends javax.swing.JDialog {
         NoRMPasien.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 131, 62), 2, true));
         NoRMPasien.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         NoRMPasien.setFont(new java.awt.Font("Poppins", 0, 36)); // NOI18N
+        NoRMPasien.setMinimumSize(new java.awt.Dimension(350, 51));
         NoRMPasien.setPreferredSize(new java.awt.Dimension(350, 75));
         NoRMPasien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -219,8 +220,10 @@ public class DlgCekKunjunganPertamaSEP extends javax.swing.JDialog {
 
         jLabel28.setForeground(new java.awt.Color(0, 131, 62));
         jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel28.setText("No Peserta JKN / NO RM / NIK");
-        jLabel28.setFont(new java.awt.Font("Poppins", 0, 36)); // NOI18N
+        jLabel28.setText("Noka / No. Rujukan / NORM / NIK");
+        jLabel28.setFont(new java.awt.Font("Poppins", 0, 18)); // NOI18N
+        jLabel28.setMaximumSize(new java.awt.Dimension(212, 24));
+        jLabel28.setMinimumSize(new java.awt.Dimension(212, 24));
         jLabel28.setPreferredSize(new java.awt.Dimension(600, 75));
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -302,9 +305,59 @@ public class DlgCekKunjunganPertamaSEP extends javax.swing.JDialog {
         // TODO add your handling code here:
     }//GEN-LAST:event_BiayaKeyPressed
 
-    private void NoRMPasienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NoRMPasienActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_NoRMPasienActionPerformed
+    private void BtnClose2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnClose2ActionPerformed
+
+        if (!NoRMPasien.getText().equals("")) {
+            if (Sequel.cariInteger("select count(pasien.no_peserta) from pasien where pasien.no_peserta='" + NoRMPasien.getText() + "'") == 1) {
+                this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                DlgRegistrasiSEPPertama form = new DlgRegistrasiSEPPertama(null, true);
+                form.tampil(NoRMPasien.getText());
+                form.setSize(this.getWidth(), this.getHeight());
+                form.setLocationRelativeTo(jPanel1);
+                this.dispose();
+                form.setVisible(true);
+                this.setCursor(Cursor.getDefaultCursor());
+            } else if (Sequel.cariInteger("select count(pasien.no_rkm_medis) from pasien where pasien.no_rkm_medis='" + NoRMPasien.getText() + "'") == 1) {
+                this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                DlgRegistrasiSEPPertama form = new DlgRegistrasiSEPPertama(null, true);
+                form.tampil(Sequel.cariIsi("select pasien.no_peserta from pasien where pasien.no_rkm_medis='" + NoRMPasien.getText() + "'"));
+                form.setSize(this.getWidth(), this.getHeight());
+                form.setLocationRelativeTo(jPanel1);
+                this.dispose();
+                form.setVisible(true);
+                this.setCursor(Cursor.getDefaultCursor());
+            } else if (Sequel.cariInteger("select count(pasien.no_ktp) from pasien where pasien.no_ktp='" + NoRMPasien.getText() + "'") == 1) {
+                this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                DlgRegistrasiSEPPertama form = new DlgRegistrasiSEPPertama(null, true);
+                form.tampil(Sequel.cariIsi("select pasien.no_peserta from pasien where pasien.no_ktp='" + NoRMPasien.getText() + "'"));
+                form.setSize(this.getWidth(), this.getHeight());
+                form.setLocationRelativeTo(jPanel1);
+                this.dispose();
+                form.setVisible(true);
+                this.setCursor(Cursor.getDefaultCursor());
+            } else {
+//                System.out.println("length "+NoRMPasien.getText().length()+" : "+(NoRMPasien.getText().length()==19));
+                if(NoRMPasien.getText().length()==19){
+                    this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
+                    DlgRegistrasiSEPPertama form = new DlgRegistrasiSEPPertama(null, true);
+                    form.tampilNoRujukan(NoRMPasien.getText());
+                    form.setSize(this.getWidth(),this.getHeight());
+                    form.setLocationRelativeTo(jPanel1);
+                    this.dispose();
+                    form.setVisible(true);
+                }else{
+                    JOptionPane.showMessageDialog(rootPane, "Data pasien tidak ditemukan!");
+                }
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(rootPane, "isian masih kosong ");
+        }
+    }//GEN-LAST:event_BtnClose2ActionPerformed
+
+    private void BtnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCloseActionPerformed
+        dispose();
+    }//GEN-LAST:event_BtnCloseActionPerformed
 
     private void NoRMPasienKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_NoRMPasienKeyPressed
         if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
@@ -347,55 +400,11 @@ public class DlgCekKunjunganPertamaSEP extends javax.swing.JDialog {
             }
 
         }
-
     }//GEN-LAST:event_NoRMPasienKeyPressed
 
-    private void BtnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCloseActionPerformed
-
-        dispose();
-    }//GEN-LAST:event_BtnCloseActionPerformed
-
-    private void BtnClose2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnClose2ActionPerformed
-
-        if (!NoRMPasien.getText().equals("")) {
-            if (Sequel.cariInteger("select count(pasien.no_peserta) from pasien where pasien.no_peserta='" + NoRMPasien.getText() + "'") == 1) {
-                this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-                DlgRegistrasiSEPPertama form = new DlgRegistrasiSEPPertama(null, true);
-                form.tampil(NoRMPasien.getText());
-                form.setSize(this.getWidth(), this.getHeight());
-                form.setLocationRelativeTo(jPanel1);
-                this.dispose();
-                form.setVisible(true);
-                this.setCursor(Cursor.getDefaultCursor());
-            } else if (Sequel.cariInteger("select count(pasien.no_rkm_medis) from pasien where pasien.no_rkm_medis='" + NoRMPasien.getText() + "'") == 1) {
-                this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-                DlgRegistrasiSEPPertama form = new DlgRegistrasiSEPPertama(null, true);
-                form.tampil(Sequel.cariIsi("select pasien.no_peserta from pasien where pasien.no_rkm_medis='" + NoRMPasien.getText() + "'"));
-                form.setSize(this.getWidth(), this.getHeight());
-                form.setLocationRelativeTo(jPanel1);
-                this.dispose();
-                form.setVisible(true);
-                this.setCursor(Cursor.getDefaultCursor());
-
-            } else if (Sequel.cariInteger("select count(pasien.no_ktp) from pasien where pasien.no_ktp='" + NoRMPasien.getText() + "'") == 1) {
-                this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-                DlgRegistrasiSEPPertama form = new DlgRegistrasiSEPPertama(null, true);
-                form.tampil(Sequel.cariIsi("select pasien.no_peserta from pasien where pasien.no_ktp='" + NoRMPasien.getText() + "'"));
-                form.setSize(this.getWidth(), this.getHeight());
-                form.setLocationRelativeTo(jPanel1);
-                this.dispose();
-                form.setVisible(true);
-                this.setCursor(Cursor.getDefaultCursor());
-
-            } else {
-                JOptionPane.showMessageDialog(rootPane, "Data pasien tidak ditemukan!");
-            }
-
-        } else {
-            JOptionPane.showMessageDialog(rootPane, "isian masih kosong ");
-        }
-
-    }//GEN-LAST:event_BtnClose2ActionPerformed
+    private void NoRMPasienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NoRMPasienActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_NoRMPasienActionPerformed
 
     /**
      * @param args the command line arguments

@@ -15,14 +15,14 @@ import javax.swing.JOptionPane;
  *
  * @author it-rsib
  */
-public class HalamanUtamaDepan extends javax.swing.JFrame {
+public class HalamanUtamaDepanx extends javax.swing.JFrame {
 
-    private static HalamanUtamaDepan myInstance;
+    private static HalamanUtamaDepanx myInstance;
 
     /**
      * Creates new form HalamanUtamaDepan
      */
-    public HalamanUtamaDepan() {
+    public HalamanUtamaDepanx() {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
         setIconImage(new ImageIcon(super.getClass().getResource("/picture/indriati48.png")).getImage());
@@ -45,16 +45,17 @@ public class HalamanUtamaDepan extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         PanelWall = new usu.widget.glass.PanelGlass();
         jPanel1 = new component.Panel();
+        btnAdmin2 = new widget.ButtonBig();
         btnAdmin7 = new widget.ButtonBig();
-        btnAdmin8 = new widget.ButtonBig();
         btnAdmin6 = new widget.ButtonBig();
         btnAdmin5 = new widget.ButtonBig();
+        btnAdmin8 = new widget.ButtonBig();
+        btnAdmin9 = new widget.ButtonBig();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("ANJUNGAN PASIEN MANDIRI");
         setBackground(new java.awt.Color(102, 102, 102));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        setPreferredSize(new java.awt.Dimension(1280, 1024));
 
         jPanel3.setBackground(new java.awt.Color(238, 238, 255));
         jPanel3.setForeground(new java.awt.Color(238, 238, 255));
@@ -97,31 +98,31 @@ public class HalamanUtamaDepan extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(238, 238, 255));
         jPanel1.setBorder(null);
         jPanel1.setPreferredSize(new java.awt.Dimension(1280, 1024));
-        jPanel1.setLayout(new java.awt.GridLayout(2, 0));
+        jPanel1.setLayout(new java.awt.GridLayout(3, 0));
+
+        btnAdmin2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/selfservice.png"))); // NOI18N
+        btnAdmin2.setText("PENDAFTARAN POLIKLINIK");
+        btnAdmin2.setFont(new java.awt.Font("Poppins", 1, 36)); // NOI18N
+        btnAdmin2.setIconTextGap(0);
+        btnAdmin2.setPreferredSize(new java.awt.Dimension(200, 90));
+        btnAdmin2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdmin2ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnAdmin2);
 
         btnAdmin7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/checkin.png"))); // NOI18N
         btnAdmin7.setText("CEK IN REGISTRASI");
         btnAdmin7.setFont(new java.awt.Font("Poppins", 1, 36)); // NOI18N
         btnAdmin7.setIconTextGap(0);
-        btnAdmin7.setPreferredSize(new java.awt.Dimension(200, 120));
+        btnAdmin7.setPreferredSize(new java.awt.Dimension(200, 90));
         btnAdmin7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAdmin7ActionPerformed(evt);
             }
         });
         jPanel1.add(btnAdmin7);
-
-        btnAdmin8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/mobilejkn48.png"))); // NOI18N
-        btnAdmin8.setText("Check In MobileJKN");
-        btnAdmin8.setFont(new java.awt.Font("Poppins", 1, 36)); // NOI18N
-        btnAdmin8.setIconTextGap(0);
-        btnAdmin8.setPreferredSize(new java.awt.Dimension(200, 90));
-        btnAdmin8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAdmin8ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btnAdmin8);
 
         btnAdmin6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/BPJS_Kesehatan_Logo.png"))); // NOI18N
         btnAdmin6.setText("SEP KONTROL");
@@ -136,7 +137,7 @@ public class HalamanUtamaDepan extends javax.swing.JFrame {
         jPanel1.add(btnAdmin6);
 
         btnAdmin5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/BPJS_Kesehatan_Logo.png"))); // NOI18N
-        btnAdmin5.setText("SEP RUJUKAN PERTAMA");
+        btnAdmin5.setText("SEP KUNJUNGAN PERTAMA");
         btnAdmin5.setFont(new java.awt.Font("Poppins", 1, 36)); // NOI18N
         btnAdmin5.setIconTextGap(0);
         btnAdmin5.setPreferredSize(new java.awt.Dimension(200, 90));
@@ -146,6 +147,30 @@ public class HalamanUtamaDepan extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btnAdmin5);
+
+        btnAdmin8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/mobilejkn48.png"))); // NOI18N
+        btnAdmin8.setText("Check In MobileJKN");
+        btnAdmin8.setFont(new java.awt.Font("Poppins", 1, 36)); // NOI18N
+        btnAdmin8.setIconTextGap(0);
+        btnAdmin8.setPreferredSize(new java.awt.Dimension(200, 90));
+        btnAdmin8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdmin8ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnAdmin8);
+
+        btnAdmin9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/BPJS_Kesehatan_Logo.png"))); // NOI18N
+        btnAdmin9.setText("KONTROL BEDA POLI");
+        btnAdmin9.setFont(new java.awt.Font("Poppins", 1, 36)); // NOI18N
+        btnAdmin9.setIconTextGap(0);
+        btnAdmin9.setPreferredSize(new java.awt.Dimension(200, 90));
+        btnAdmin9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAdmin9ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnAdmin9);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -158,6 +183,13 @@ public class HalamanUtamaDepan extends javax.swing.JFrame {
         pilih.setLocationRelativeTo(this);
         pilih.setVisible(true);
     }//GEN-LAST:event_btnAdmin6ActionPerformed
+
+    private void btnAdmin2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdmin2ActionPerformed
+        DlgCekNoRM pilih = new DlgCekNoRM(null, true);
+        pilih.setSize(this.getWidth(), this.getHeight());
+        pilih.setLocationRelativeTo(this);
+        pilih.setVisible(true);
+    }//GEN-LAST:event_btnAdmin2ActionPerformed
 
     private void btnAdmin7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdmin7ActionPerformed
         DlgCekBooking pilih = new DlgCekBooking(null, true);
@@ -174,13 +206,20 @@ public class HalamanUtamaDepan extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAdmin5ActionPerformed
 
     private void btnAdmin8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdmin8ActionPerformed
-        DlgCekinMobileJKN pilih = new DlgCekinMobileJKN(null, true);
+//        DlgCekinMobileJKN pilih = new DlgCekinMobileJKN(null, true);
+//        pilih.setSize(this.getWidth(), this.getHeight());
+//        pilih.setLocationRelativeTo(this);
+//        pilih.setVisible(true);
+
+        JOptionPane.showMessageDialog(rootPane, "Mohon maaf, fitur masih dalam tahap pengembangan");
+    }//GEN-LAST:event_btnAdmin8ActionPerformed
+
+    private void btnAdmin9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAdmin9ActionPerformed
+        DlgCekKunjunganBedaPoli pilih = new DlgCekKunjunganBedaPoli(null, true);
         pilih.setSize(this.getWidth(), this.getHeight());
         pilih.setLocationRelativeTo(this);
         pilih.setVisible(true);
-
-//        JOptionPane.showMessageDialog(rootPane, "Mohon maaf, fitur masih dalam tahap pengembangan");
-    }//GEN-LAST:event_btnAdmin8ActionPerformed
+    }//GEN-LAST:event_btnAdmin9ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -199,27 +238,28 @@ public class HalamanUtamaDepan extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(HalamanUtamaDepan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HalamanUtamaDepanx.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(HalamanUtamaDepan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HalamanUtamaDepanx.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(HalamanUtamaDepan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HalamanUtamaDepanx.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(HalamanUtamaDepan.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(HalamanUtamaDepanx.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new HalamanUtamaDepan().setVisible(true);
+                new HalamanUtamaDepanx().setVisible(true);
             }
         });
     }
 
-    public static HalamanUtamaDepan getInstance() {
+    public static HalamanUtamaDepanx getInstance() {
         if (myInstance == null) {
-            myInstance = new HalamanUtamaDepan();
+            myInstance = new HalamanUtamaDepanx();
         }
 
         return myInstance;
@@ -227,10 +267,12 @@ public class HalamanUtamaDepan extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private usu.widget.glass.PanelGlass PanelWall;
+    private widget.ButtonBig btnAdmin2;
     private widget.ButtonBig btnAdmin5;
     private widget.ButtonBig btnAdmin6;
     private widget.ButtonBig btnAdmin7;
     private widget.ButtonBig btnAdmin8;
+    private widget.ButtonBig btnAdmin9;
     private widget.Label jLabel39;
     private component.Panel jPanel1;
     private javax.swing.JPanel jPanel2;

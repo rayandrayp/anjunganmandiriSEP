@@ -79,7 +79,7 @@ public final class BPJSCekRiwayatRujukanTerakhir extends javax.swing.JDialog {
             } else if (i == 1) {
                 column.setPreferredWidth(160);
             } else if (i == 2) {
-                column.setPreferredWidth(200);
+                column.setPreferredWidth(230);
             } else if (i == 3) {
                 column.setPreferredWidth(70);
             } else if (i == 4) {
