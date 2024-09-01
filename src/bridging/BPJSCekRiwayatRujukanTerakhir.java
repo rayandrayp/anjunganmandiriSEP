@@ -241,6 +241,7 @@ public final class BPJSCekRiwayatRujukanTerakhir extends javax.swing.JDialog {
     public void tampil(String nomorkartu, String namapasien) {
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
         try {
+            System.out.println("get rujukan ");
             NoKartu.setText(nomorkartu);
             NamaPasien.setText(namapasien);
             Valid.tabelKosong(tabMode);
@@ -269,6 +270,7 @@ public final class BPJSCekRiwayatRujukanTerakhir extends javax.swing.JDialog {
                 }
             }
 
+            System.out.println("get rujukan RS");
             headers = new HttpHeaders();
             headers.setContentType(MediaType.APPLICATION_JSON);
             headers.add("X-Cons-ID", koneksiDB.CONSIDAPIBPJS());
