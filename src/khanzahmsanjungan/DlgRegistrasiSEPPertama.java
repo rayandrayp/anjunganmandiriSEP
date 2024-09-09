@@ -1496,7 +1496,7 @@ public class DlgRegistrasiSEPPertama extends javax.swing.JDialog {
 
     private void btnSimpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSimpanActionPerformed
         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-//        cekFinger(NoKartu.getText());
+        cekFinger(NoKartu.getText());
         if (TNoRw.getText().trim().equals("") || TPasien.getText().trim().equals("")) {
             Valid.textKosong(TNoRw, "Pasien");
         } else if (NoKartu.getText().trim().equals("")) {
@@ -1515,9 +1515,9 @@ public class DlgRegistrasiSEPPertama extends javax.swing.JDialog {
             Valid.textKosong(Keterangan, "Keterangan");
         } else if (KdDPJP.getText().trim().equals("") || NmDPJP.getText().trim().equals("")) {
             Valid.textKosong(KdDPJP, "DPJP");
-//        } else if (statusfinger == false && Sequel.cariInteger("select timestampdiff(year, '" + TglLahir.getText() + "', CURRENT_DATE())") >= 17 && JenisPelayanan.getSelectedIndex() != 0 && !KdPoli.getText().equals("IGD")) {
-//            JOptionPane.showMessageDialog(rootPane, "Maaf, Pasien belum melakukan Fingerprint");
-//            BukaFingerPrint(NoKartu.getText());
+        } else if (statusfinger == false && Sequel.cariInteger("select timestampdiff(year, '" + TglLahir.getText() + "', CURRENT_DATE())") >= 17 && JenisPelayanan.getSelectedIndex() != 0 && !KdPoli.getText().equals("IGD")) {
+            JOptionPane.showMessageDialog(rootPane, "Maaf, Pasien belum melakukan Fingerprint");
+            BukaFingerPrint(NoKartu.getText());
         } else {
             kodepolireg = Sequel.cariIsi("select kd_poli_rs from maping_poli_bpjs where kd_poli_bpjs=?", KdPoli.getText());
             kodedokterreg = Sequel.cariIsi("select kd_dokter from maping_dokter_dpjpvclaim where kd_dokter_bpjs=?", KdDPJP.getText());
@@ -1530,7 +1530,7 @@ public class DlgRegistrasiSEPPertama extends javax.swing.JDialog {
             isNumber();
             if (JenisPelayanan.getSelectedIndex() == 0) {
                 this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-//                insertSEP();
+                insertSEP();
                 // simpan registrasi pasien
 //                SimpanRegistrasi();
                 // buat SEP
@@ -1552,7 +1552,7 @@ public class DlgRegistrasiSEPPertama extends javax.swing.JDialog {
                             this.setCursor(Cursor.getDefaultCursor());
                         }
                         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-//                        insertSEP();
+                        insertSEP();
                         // simpan registrasi pasien
 //                        SimpanRegistrasi();
                         // buat SEP
@@ -1576,7 +1576,7 @@ public class DlgRegistrasiSEPPertama extends javax.swing.JDialog {
                             this.setCursor(Cursor.getDefaultCursor());
                         }
                         this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
-//                        insertSEP();
+                        insertSEP();
                         // simpan registrasi pasien
 //                        SimpanRegistrasi();
                         // buat SEP
@@ -3935,7 +3935,7 @@ public class DlgRegistrasiSEPPertama extends javax.swing.JDialog {
                 requestEntity = new HttpEntity(requestJson, headers);
                 URL = koneksiDB.URLAPIMOBILEJKN() + "/antrean/add";
                 TulisLog("WS Add Antrean JSON: "+requestJson+" \n URL: "+URL+" \n headers: "+headers);
-//                        root = mapper.readTree(api.getRest().exchange(URL, HttpMethod.POST, requestEntity, String.class).getBody());
+                root = mapper.readTree(api.getRest().exchange(URL, HttpMethod.POST, requestEntity, String.class).getBody());
                 nameNode = root.path("metadata");
                 respon=nameNode.path("code").asText();
                 if (nameNode.path("code").asText().equals("200")) {
