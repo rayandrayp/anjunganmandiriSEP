@@ -98,7 +98,7 @@ public final class BPJSCekHistoriPelayanan extends javax.swing.JDialog {
             } else if (i == 5) {
                 column.setPreferredWidth(80);
             } else if (i == 6) {
-                column.setPreferredWidth(155);
+                column.setPreferredWidth(220);
             } else if (i == 7) {
                 column.setPreferredWidth(155);
             } else if (i == 8) {

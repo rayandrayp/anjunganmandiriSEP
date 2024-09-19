@@ -106,7 +106,7 @@ public class DlgCekSKDPKontrol extends javax.swing.JDialog {
         NoRMPasien = new component.TextBox();
         jLabel28 = new component.Label();
         BtnClose = new widget.ButtonBig();
-        BtnClose2 = new widget.ButtonBig();
+        BtnCentang = new widget.ButtonBig();
 
         LblKdPoli.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         LblKdPoli.setText("Norm");
@@ -250,25 +250,25 @@ public class DlgCekSKDPKontrol extends javax.swing.JDialog {
         gridBagConstraints.gridy = 14;
         jPanel1.add(BtnClose, gridBagConstraints);
 
-        BtnClose2.setBackground(new java.awt.Color(255, 255, 255));
-        BtnClose2.setForeground(new java.awt.Color(51, 51, 51));
-        BtnClose2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/konfirmasi.png"))); // NOI18N
-        BtnClose2.setMnemonic('U');
-        BtnClose2.setToolTipText("Alt+U");
-        BtnClose2.setFont(new java.awt.Font("Poppins", 1, 11)); // NOI18N
-        BtnClose2.setIconTextGap(0);
-        BtnClose2.setMargin(new java.awt.Insets(0, 0, 0, 0));
-        BtnClose2.setPreferredSize(new java.awt.Dimension(100, 75));
-        BtnClose2.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
-        BtnClose2.addActionListener(new java.awt.event.ActionListener() {
+        BtnCentang.setBackground(new java.awt.Color(255, 255, 255));
+        BtnCentang.setForeground(new java.awt.Color(51, 51, 51));
+        BtnCentang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/48x48/konfirmasi.png"))); // NOI18N
+        BtnCentang.setMnemonic('U');
+        BtnCentang.setToolTipText("Alt+U");
+        BtnCentang.setFont(new java.awt.Font("Poppins", 1, 11)); // NOI18N
+        BtnCentang.setIconTextGap(0);
+        BtnCentang.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        BtnCentang.setPreferredSize(new java.awt.Dimension(100, 75));
+        BtnCentang.setVerticalTextPosition(javax.swing.SwingConstants.CENTER);
+        BtnCentang.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtnClose2ActionPerformed(evt);
+                BtnCentangActionPerformed(evt);
             }
         });
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 14;
-        jPanel1.add(BtnClose2, gridBagConstraints);
+        jPanel1.add(BtnCentang, gridBagConstraints);
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.CENTER);
 
@@ -339,7 +339,7 @@ public class DlgCekSKDPKontrol extends javax.swing.JDialog {
         dispose();
     }//GEN-LAST:event_BtnCloseActionPerformed
 
-    private void BtnClose2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnClose2ActionPerformed
+    private void BtnCentangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnCentangActionPerformed
 
         if (Sequel.cariInteger("select count(bridging_surat_kontrol_bpjs.no_surat) from bridging_surat_kontrol_bpjs where bridging_surat_kontrol_bpjs.no_surat='" + NoRMPasien.getText() + "'") > 0) {
             this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
@@ -365,7 +365,7 @@ public class DlgCekSKDPKontrol extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(rootPane, "Data surat kontrol tidak ditemukan!");
         }
 
-    }//GEN-LAST:event_BtnClose2ActionPerformed
+    }//GEN-LAST:event_BtnCentangActionPerformed
 
     /**
      * @param args the command line arguments
@@ -385,8 +385,8 @@ public class DlgCekSKDPKontrol extends javax.swing.JDialog {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private component.TextBox Biaya;
+    private widget.ButtonBig BtnCentang;
     private widget.ButtonBig BtnClose;
-    private widget.ButtonBig BtnClose2;
     private component.Label LblKdDokter;
     private component.Label LblKdPoli;
     private component.TextBox NoRMPasien;
