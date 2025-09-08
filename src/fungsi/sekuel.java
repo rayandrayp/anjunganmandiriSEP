@@ -54,7 +54,7 @@ public final class sekuel {
     private javax.swing.ImageIcon iconThumbnail = null;
     private String folder;
     private final Connection connect = koneksiDB.condb();
-    private String AKTIFKANTRACKSQL = koneksiDB.AKTIFKANTRACKSQL();
+    private String AKTIFKANTRACKSQL = "yes";//koneksiDB.AKTIFKANTRACKSQL();
     private PreparedStatement ps;
     private ResultSet rs;
     private int angka = 0;

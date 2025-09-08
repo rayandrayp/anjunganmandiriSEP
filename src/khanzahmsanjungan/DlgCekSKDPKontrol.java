@@ -318,7 +318,7 @@ public class DlgCekSKDPKontrol extends javax.swing.JDialog {
                 this.dispose();
                 form.setVisible(true);
                 this.setCursor(Cursor.getDefaultCursor());
-            } else if (Sequel.cariInteger("select count(surat_kontrol_internal.no_surat) from surat_kontrol_internal where surat_kontrol_internal.no_surat='" + NoRMPasien.getText() + "'") > 0) {
+            } else if (Sequel.cariInteger("select count(surat_reminder_kontrol.no_surat) from surat_reminder_kontrol where surat_reminder_kontrol.no_surat='" + NoRMPasien.getText() + "'") > 0) {
                 this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
                 DlgRegistrasiSEPPertama form = new DlgRegistrasiSEPPertama(null, true);
                 form.tampilKontrol(NoRMPasien.getText(),"internal");
@@ -351,7 +351,7 @@ public class DlgCekSKDPKontrol extends javax.swing.JDialog {
             this.dispose();
             form.setVisible(true);
             this.setCursor(Cursor.getDefaultCursor());
-        } else if (Sequel.cariInteger("select count(surat_kontrol_internal.no_surat) from surat_kontrol_internal where surat_kontrol_internal.no_surat='" + NoRMPasien.getText() + "'") > 0) {
+        } else if (Sequel.cariInteger("select count(surat_reminder_kontrol.no_surat) from surat_reminder_kontrol where surat_reminder_kontrol.no_surat='" + NoRMPasien.getText() + "'") > 0) {
             this.setCursor(Cursor.getPredefinedCursor(Cursor.WAIT_CURSOR));
             DlgRegistrasiSEPPertama form = new DlgRegistrasiSEPPertama(null, true);
             form.tampilKontrol(NoRMPasien.getText(),"internal");
