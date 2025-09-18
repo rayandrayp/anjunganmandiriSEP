@@ -1596,15 +1596,19 @@ public class DlgRegistrasiSEPPertama extends javax.swing.JDialog {
 //            }
           boolean isCekFisio = false;
             if(KdPoli.getText().equals("IRM")){
-                if(Sequel.cariInteger("SELECT COUNT(*) FROM input_batas_perawatan_fisio WHERE no_rkm_medis = '"+TNoRM.getText()+"' AND tgl_selesai_perawatan >= '"+Valid.SetTgl(TanggalSEP.getSelectedItem()+"")+"'")>0){
-                    isCekFisio = true;
-                }else{
-                    int jawab=JOptionPane.showConfirmDialog(null, "Eeiiittss, Pasien sudah habis masa perawatan fisioterapi. Tetap lanjut..??","Konfirmasi",JOptionPane.YES_NO_OPTION);
-                    if(jawab==JOptionPane.YES_OPTION){
+                if(Sequel.cariInteger("SELECT COUNT(*) FROM input_batas_perawatan_fisio WHERE no_rkm_medis = ?", TNoRM.getText())>0){
+                    if(Sequel.cariInteger("SELECT COUNT(*) FROM input_batas_perawatan_fisio WHERE no_rkm_medis = '"+TNoRM.getText()+"' AND tgl_selesai_perawatan >= '"+Valid.SetTgl(TanggalSEP.getSelectedItem()+"")+"'")>0){
                         isCekFisio = true;
                     }else{
-                        isCekFisio = false;
+                        int jawab=JOptionPane.showConfirmDialog(null, "Eeiiittss, Pasien sudah habis masa perawatan fisioterapi. Tetap lanjut..??","Konfirmasi",JOptionPane.YES_NO_OPTION);
+                        if(jawab==JOptionPane.YES_OPTION){
+                            isCekFisio = true;
+                        }else{
+                            isCekFisio = false;
+                        }
                     }
+                }else{
+                    isCekFisio = true;
                 }
             }else{
                 isCekFisio = true;
