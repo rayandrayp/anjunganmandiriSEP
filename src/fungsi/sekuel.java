@@ -315,6 +315,14 @@ public final class sekuel {
                     ps.close();
                 }
             }
+
+            if (AKTIFKANTRACKSQL.equals("yes")) {
+                dicari = "";
+                for (angka = 1; angka <= i; angka++) {
+                    dicari = dicari + "|" + a[angka - 1];
+                }
+            }
+            SimpanTrack("insert into " + table + " values(" + dicari + ")");
         } catch (Exception e) {
         }
     }
@@ -330,6 +338,14 @@ public final class sekuel {
             if (ps != null) {
                 ps.close();
             }
+
+            if (AKTIFKANTRACKSQL.equals("yes")) {
+                dicari = "";
+                for (angka = 1; angka <= i; angka++) {
+                    dicari = dicari + "|" + a[angka - 1];
+                }
+            }
+            SimpanTrack("insert into " + table + " values(" + dicari + ")");
         } catch (Exception e) {
             try {
                 ps = connect.prepareStatement("update " + table + " set " + update + " where " + acuan_field);
@@ -359,6 +375,14 @@ public final class sekuel {
             if (ps != null) {
                 ps.close();
             }
+
+            if (AKTIFKANTRACKSQL.equals("yes")) {
+                dicari = "";
+                for (angka = 1; angka <= i; angka++) {
+                    dicari = dicari + "|" + a[angka - 1];
+                }
+            }
+            SimpanTrack("insert into " + table + " values(" + dicari + ")");
         } catch (Exception e) {
             try {
                 ps = connect.prepareStatement("update " + table + " set " + update + " where " + acuan_field);
@@ -389,6 +413,8 @@ public final class sekuel {
                     ps.close();
                 }
             }
+
+            SimpanTrack("insert into " + table + " values(" + value + ")");
         } catch (Exception e) {
             System.out.println("Notifikasi : " + e);
         }

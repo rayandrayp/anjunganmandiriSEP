@@ -1676,10 +1676,10 @@ public class DlgRegistrasiSEPPertama extends javax.swing.JDialog {
                                     insertSEP();
                                 }else{
                                     JOptionPane.showMessageDialog(null,"Maaf, antrian mobile JKN gagal dibuat. Silahkan cek jadwal dokter / Nomor Referensi..!!");
-                                    int reply = JOptionPane.showConfirmDialog(rootPane,"Eeiiiiiits, Antrian gagal didaftarkan, tetap lanjut..???","Konfirmasi",JOptionPane.YES_NO_OPTION);
-                                    if (reply == JOptionPane.YES_OPTION) {
-                                        insertSEP();
-                                    }
+//                                    int reply = JOptionPane.showConfirmDialog(rootPane,"Eeiiiiiits, Antrian gagal didaftarkan, tetap lanjut..???","Konfirmasi",JOptionPane.YES_NO_OPTION);
+//                                    if (reply == JOptionPane.YES_OPTION) {
+//                                        insertSEP();
+//                                    }
                                 }
                             }else{
                                 SimpanAntrianOnSite();
@@ -4120,25 +4120,47 @@ public class DlgRegistrasiSEPPertama extends javax.swing.JDialog {
             
             TulisLog("\nsimpan ke referensi antrian onsite");
             //simpan ke referensi mobilejkn
-//            if(Sequel.cariInteger("Select count(*) from referensi_antrian_onsite where no_rawat = ?",TNoRw.getText()) > 0){
-//                kodebooking = Sequel.cariIsi("Select nobooking from referensi_antrian_onsite where no_rawat = ?",TNoRw.getText());
-//                TulisLog("kodebooking sudah ada, "+kodebooking+" "+Sequel.cariInteger("Select count(*) from referensi_antrian_onsite where nobooking = ?",kodebooking));
-//            } else {
-//                kodebooking = Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(nobooking,6),signed)),0)+1 from referensi_antrian_onsite where tanggalperiksa='" + Valid.SetTgl(TanggalSEP.getSelectedItem().toString()) + "' ", Valid.SetTgl(TanggalSEP.getSelectedItem().toString()).replaceAll("-", "") + "", 6);
+            
             if(checkinMJKN){    
                 kodebooking = Sequel.cariIsi("select nobooking from referensi_mobilejkn_bpjs where no_rawat=?", TNoRw.getText());
                 Sequel.queryu("update referensi_mobilejkn_bpjs set validasi = NOW() where nobooking='"+kodebooking+"'");
                 Sequel.queryu("update reg_periksa set jam_reg = NOW() where no_rawat=?", TNoRw.getText());
             }else{
-                if (Sequel.menyimpantf2("referensi_antrian_onsite", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "No. Rawat", 23, new String[]{
-                    kodebooking,TNoRw.getText(),NoKartu.getText(),NIK.getText(),NoTelp.getText(),KdPoli.getText(),(statuspasien == "Baru")? "1" : "0",TNoRM.getText(),
-                    Valid.SetTgl(TanggalSEP.getSelectedItem() + ""),KdDPJP.getText(),jammulai.substring(0, 5) + "-" + jamselesai.substring(0, 5),
-                    jenisKunjungan,nomorReferensi,kodepolireg+"-"+NoReg.getText(),NoReg.getText(),parsedDate.getTime()+"",(kuota - Integer.parseInt(NoReg.getText()))+"",
-                    kuota+"",(kuota - Integer.parseInt(NoReg.getText()))+"",kuota+"","Checkin",new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new java.util.Date()),"Belum"}) == true) {
-                    
-                    TulisLog("simpan referensi_antrian_onsite berhasil, "+kodebooking);
+                if(Sequel.cariInteger("Select count(*) from referensi_antrian_onsite where no_rawat = ?",TNoRw.getText()) > 0){
+                    kodebooking = Sequel.cariIsi("Select nobooking from referensi_antrian_onsite where no_rawat = ?",TNoRw.getText());
+                    TulisLog("kodebooking sudah ada, "+kodebooking+" "+Sequel.cariInteger("Select count(*) from referensi_antrian_onsite where nobooking = ?",kodebooking));
                 } else {
-                    TulisLog("simpan referensi_antrian_onsite gagal, "+kodebooking);
+                    kodebooking = Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(nobooking,6),signed)),0)+1 from referensi_antrian_onsite where tanggalperiksa='" + Valid.SetTgl(TanggalSEP.getSelectedItem().toString()) + "' ", Valid.SetTgl(TanggalSEP.getSelectedItem().toString()).replaceAll("-", "") + "", 6);
+                    if (Sequel.menyimpantf2("referensi_antrian_onsite", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "No. Rawat", 23, new String[]{
+                        kodebooking,TNoRw.getText(),NoKartu.getText(),NIK.getText(),NoTelp.getText(),KdPoli.getText(),(statuspasien == "Baru")? "1" : "0",TNoRM.getText(),
+                        Valid.SetTgl(TanggalSEP.getSelectedItem() + ""),KdDPJP.getText(),jammulai.substring(0, 5) + "-" + jamselesai.substring(0, 5),
+                        jenisKunjungan,nomorReferensi,kodepolireg+"-"+NoReg.getText(),NoReg.getText(),parsedDate.getTime()+"",(kuota - Integer.parseInt(NoReg.getText()))+"",
+                        kuota+"",(kuota - Integer.parseInt(NoReg.getText()))+"",kuota+"","Checkin",new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new java.util.Date()),"Belum"}) == true) {
+
+                        TulisLog("simpan referensi_antrian_onsite berhasil, "+kodebooking);
+                    } else {
+                        kodebooking = Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(nobooking,6),signed)),0)+1 from referensi_antrian_onsite where tanggalperiksa='" + Valid.SetTgl(TanggalSEP.getSelectedItem().toString()) + "' ", Valid.SetTgl(TanggalSEP.getSelectedItem().toString()).replaceAll("-", "") + "", 6);
+                        if (Sequel.menyimpantf2("referensi_antrian_onsite", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "No. Rawat", 23, new String[]{
+                            kodebooking,TNoRw.getText(),NoKartu.getText(),NIK.getText(),NoTelp.getText(),KdPoli.getText(),(statuspasien == "Baru")? "1" : "0",TNoRM.getText(),
+                            Valid.SetTgl(TanggalSEP.getSelectedItem() + ""),KdDPJP.getText(),jammulai.substring(0, 5) + "-" + jamselesai.substring(0, 5),
+                            jenisKunjungan,nomorReferensi,kodepolireg+"-"+NoReg.getText(),NoReg.getText(),parsedDate.getTime()+"",(kuota - Integer.parseInt(NoReg.getText()))+"",
+                            kuota+"",(kuota - Integer.parseInt(NoReg.getText()))+"",kuota+"","Checkin",new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new java.util.Date()),"Belum"}) == true) {
+
+                            TulisLog("simpan referensi_antrian_onsite berhasil, "+kodebooking);
+                        } else {
+                            kodebooking = Valid.autoNomer3("select ifnull(MAX(CONVERT(RIGHT(nobooking,6),signed)),0)+1 from referensi_antrian_onsite where tanggalperiksa='" + Valid.SetTgl(TanggalSEP.getSelectedItem().toString()) + "' ", Valid.SetTgl(TanggalSEP.getSelectedItem().toString()).replaceAll("-", "") + "", 6);
+                            if (Sequel.menyimpantf2("referensi_antrian_onsite", "?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?", "No. Rawat", 23, new String[]{
+                                kodebooking,TNoRw.getText(),NoKartu.getText(),NIK.getText(),NoTelp.getText(),KdPoli.getText(),(statuspasien == "Baru")? "1" : "0",TNoRM.getText(),
+                                Valid.SetTgl(TanggalSEP.getSelectedItem() + ""),KdDPJP.getText(),jammulai.substring(0, 5) + "-" + jamselesai.substring(0, 5),
+                                jenisKunjungan,nomorReferensi,kodepolireg+"-"+NoReg.getText(),NoReg.getText(),parsedDate.getTime()+"",(kuota - Integer.parseInt(NoReg.getText()))+"",
+                                kuota+"",(kuota - Integer.parseInt(NoReg.getText()))+"",kuota+"","Checkin",new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new java.util.Date()),"Belum"}) == true) {
+
+                                TulisLog("simpan referensi_antrian_onsite berhasil, "+kodebooking);
+                            } else {
+                                TulisLog("simpan referensi_antrian_onsite gagal, "+kodebooking);
+                            }
+                        }
+                    }
                 }
             }
 //                    isNumber();
@@ -4249,7 +4271,7 @@ public class DlgRegistrasiSEPPertama extends javax.swing.JDialog {
                         + "}";
                 requestEntity = new HttpEntity(requestJson, headers);
                 URL = koneksiDB.URLAPIMOBILEJKN() + "/antrean/add";
-                TulisLog("WS Add Antrean JSON: "+requestJson+" \n URL: "+URL+" \n headers: "+headers);
+                TulisLog("WS Add Antrean JSON "+TNoRw.getText()+" : "+requestJson+" \n URL: "+URL+" \n headers: "+headers);
                 root = mapper.readTree(api.getRest().exchange(URL, HttpMethod.POST, requestEntity, String.class).getBody());
                 nameNode = root.path("metadata");
                 respon=nameNode.path("code").asText();
@@ -4729,13 +4751,28 @@ public class DlgRegistrasiSEPPertama extends javax.swing.JDialog {
     }
     
     public void TulisLog(String log){
-        try{
-            PrintWriter out = new PrintWriter(new FileWriter("ErrorLog/ErrorLog.txt",true));
-            out.println(log+"");
-            out.close();
-        } catch(Exception e){
-            System.out.println(e);
+        try {
+            ps = koneksi.prepareStatement("insert into log_asm values(0,now(),?)");
+            try {
+                ps.setString(1, log);
+                ps.executeUpdate();
+            } catch (Exception e) {
+                System.out.println("Notifikasi : " + e);
+            } finally {
+                if (ps != null) {
+                    ps.close();
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("Notifikasi : " + e);
         }
+//        try{
+//            PrintWriter out = new PrintWriter(new FileWriter("ErrorLog/ErrorLog.txt",true));
+//            out.println(log+"");
+//            out.close();
+//        } catch(Exception e){
+//            System.out.println(e);
+//        }
    }
     
 }
