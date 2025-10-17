@@ -4282,11 +4282,17 @@ public class DlgRegistrasiSEPPertama extends javax.swing.JDialog {
                     TulisLog("WS Add Antrean berhasil, update status kirim menjadi Sudah "+kodebooking);
                     statusantrean=true;
                 } else {
-                    statusantrean=false;
-                    System.out.println("Daftar antrean2 "+kodebooking+" gagal | "+nameNode.path("message").asText());
-                    Sequel.queryu("delete from referensi_antrian_onsite where no_rawat = '"+TNoRw.getText()+"'");
-                    Sequel.queryu("insert into log_asm value (0,NOW(),'"+"ASM, daftar antrol gagal "+ TNoRM.getText()+ " : " +kodebooking+" gagal \n"+"respon WS BPJS : " + nameNode.path("code").asText() + " " + nameNode.path("message").asText()+" | JSON "+requestJson+"')");
-                    TulisLog("Daftar antrean2 "+ TNoRM.getText()+ " : " +kodebooking+" gagal\n"+"respon WS BPJS : " + nameNode.path("code").asText() + " " + nameNode.path("message").asText() + "\n"); 
+                    if(Sequel.cariInteger("select count(nobooking) from referensi_mobilejkn_bpjs where nobooking=?", kodebooking)>0){
+                        TulisLog("ASM, Pasien MJKN "+kodebooking+". simpan ke waktu layan");
+                        Sequel.menyimpan("record_waktulayan_bpjs","0,'"+TNoRw.getText()+"','"+Valid.SetTgl(TanggalSEP.getSelectedItem()+"")+"',curtime(),'00:00:00','00:00:00','00:00:00','00:00:00'");
+                        statusantrean=true;
+                    }else{
+                        statusantrean=false;
+                        System.out.println("Daftar antrean2 "+kodebooking+" gagal | "+nameNode.path("message").asText());
+                        Sequel.queryu("delete from referensi_antrian_onsite where no_rawat = '"+TNoRw.getText()+"'");
+                        Sequel.queryu("insert into log_asm value (0,NOW(),'"+"ASM, daftar antrol gagal "+ TNoRM.getText()+ " : " +kodebooking+" gagal \n"+"respon WS BPJS : " + nameNode.path("code").asText() + " " + nameNode.path("message").asText()+" | JSON "+requestJson+"')");
+                        TulisLog("Daftar antrean2 "+ TNoRM.getText()+ " : " +kodebooking+" gagal\n"+"respon WS BPJS : " + nameNode.path("code").asText() + " " + nameNode.path("message").asText() + "\n"); 
+                    }
                 }
             } catch (Exception e) {
                 statusantrean=false;
