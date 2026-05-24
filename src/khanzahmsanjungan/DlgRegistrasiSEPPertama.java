@@ -2786,8 +2786,8 @@ public class DlgRegistrasiSEPPertama extends javax.swing.JDialog {
 //                }
             } else {
 //                Sequel.queryu("delete from referensi_antrian_onsite where no_rawat = '"+TNoRw.getText()+"'");
-                JOptionPane.showMessageDialog(rootPane, "Simpan SEP gagal, harap hubungi loket pendaftaran...!\n"+nameNode.path("message").asText());
-                Sequel.queryu("delete from reg_periksa where no_rawat='"+TNoRw.getText()+"'");
+                JOptionPane.showMessageDialog(rootPane, "Simpan SEP gagal, Respon BPJS : "+nameNode.path("message").asText());
+//                Sequel.queryu("delete from reg_periksa where no_rawat='"+TNoRw.getText()+"'");
 //                TulisLog("respon WS BPJS Insert SEP "+ TNoRM.getText()+ " : " + nameNode.path("code").asText() + " " + nameNode.path("message").asText() + "\n");
             }
         } catch (Exception ex) {
